@@ -583,7 +583,7 @@ class ContainerBooking extends StatelessWidget {
                   height: 35.h,
                   onTap: onPressed,
                   text: "Complete",
-                  color: Color.fromRGBO(2, 94, 57, 1),
+                  color: AppColors.primaryDark,
                   //color: Color.fromARGB(255, 115, 171, 197),
                   fontStyle: FontPalette.white12500,
                 ),

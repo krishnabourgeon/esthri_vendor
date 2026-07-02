@@ -643,7 +643,7 @@ class ContainerBooking extends StatelessWidget {
                             height: 39.h,
                             onTap: onPressed,
                             text: "Start",
-                            color: Color.fromRGBO(2, 94, 57, 1).withOpacity(1),
+                            color: AppColors.primaryDark,
                             fontStyle: FontPalette.white12500,
                           )
                         : SizedBox(),
@@ -657,7 +657,7 @@ class ContainerBooking extends StatelessWidget {
                       height: 39.h,
                       onTap: onPressed,
                       text: "Start",
-                      color: Color.fromRGBO(2, 94, 57, 1).withOpacity(1),
+                      color: AppColors.primaryDark,
                       fontStyle: FontPalette.white12500,
                     )
                   ],

@@ -32,220 +32,189 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.white),
-      ),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light,
+      child: Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
+        top: false,
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // 20.verticalSpace,
               Container(
-                // height: 300.h,
-                child: Column(
-                  children: [
-                    //  40.verticalSpace,
-                    // Container(
-                    //   height: 250.h,
-                    //   width: 300.w,
-                    //   decoration: BoxDecoration(
-                    //       image: DecorationImage(
-                    //           image: AssetImage("assets/logo_no_bg.png"),
-                    //           fit: BoxFit.contain)),
-                    // ),
-
-                    Text(
-                      "Welcome Back",
-                      style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 29.sp,
-                          color: Color.fromRGBO(0, 0, 0, 1)),
-                    ).horizontalPadding(0.w),
-                    Text(
-                      "Please enter your details",
-                      style: GoogleFonts.inter(
-                          color: Color.fromRGBO(0, 0, 0, 1),
-                          fontWeight: FontWeight.w400,
-                          fontSize: 13.sp),
-                    ),
-                    40.verticalSpace,
-                    const Row(
-                      children: [],
-                    ).horizontalPadding(12.w),
-                    25.verticalSpace,
-                    Row(
-                      children: [
-                        Text("Phone Number", style: FontPalette.black13500),
-                      ],
-                    ),
-                    5.verticalSpace,
-                    Container(
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: Color.fromRGBO(23, 122, 99, 1)),
-                          //color: const Color.fromRGBO(234, 244, 246, 1),
-                          borderRadius: BorderRadius.circular(10.r)),
-                      width: 348.w,
-                      height: 47.h,
-                      child: TextField(
-                        cursorColor: Colors.black,
-                        style: FontPalette.black15500,
-
-                        // style: TextStyle(
-                        //     color: Colors.white,
-                        //     fontSize: 14.sp,
-                        //     fontWeight: FontWeight.w500),
-                        controller: phoneController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 20.w),
-                          border: InputBorder.none,
+                decoration: BoxDecoration(
+                  gradient: AppColors.primaryGradient,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(36.r),
+                    bottomRight: Radius.circular(36.r),
+                  ),
+                ),
+                child: SafeArea(
+                  bottom: false,
+                  child: Column(
+                    children: [
+                      30.verticalSpace,
+                      Container(
+                        height: 78.w,
+                        width: 78.w,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primaryDark.withValues(
+                                alpha: 0.25,
+                              ),
+                              blurRadius: 18,
+                              offset: const Offset(0, 8),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.iron_outlined,
+                          color: AppColors.primaryDark,
+                          size: 38.w,
                         ),
                       ),
-                    ),
-                    5.verticalSpace,
-                    Row(
-                      children: [
-                        Text(
-                          "Password",
-                          style: FontPalette.black13500,
+                      18.verticalSpace,
+                      Text(
+                        "Welcome Back",
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 26.sp,
+                          color: Colors.white,
                         ),
-                      ],
-                    ),
-                    5.verticalSpace,
-                    ValueListenableBuilder<bool>(
-                        valueListenable: showPassword,
-                        builder: (context, value, child) {
-                          return CustomText(
-                            cursorColor: Colors.black,
-
-                            style: FontPalette.black15500,
-                            semanticlabel: "Enter your password",
-                            controller: passwordController,
-                            maxlines: 1,
-                            // prefixWidget: Assets.pngChangePassword,
-                            suffixWidget: InkWell(
-                              onTap: () {
-                                showPassword.value = !showPassword.value;
-                              },
-                              child: SizedBox.square(
-                                dimension: 49.h,
-                                child: Icon(
-                                  semanticLabel: value
-                                      ? "password is not visible"
-                                      : "password is visible",
-                                  value
-                                      ? Icons.visibility_off_outlined
-                                      : Icons.visibility_outlined,
-                                  size: 20.r,
-                                  color: HexColor("#7A7A7A"),
-                                ),
-                              ),
-                            ),
-                            // hintText: Constants.password,
-                            // hintStyle: FontPalette.darkGrey11Medium,
-
-                            obscureText: value,
-                          );
-                        }),
-                    120.verticalSpace,
-                    CustomButton(
-                      onTap: () async {
-                        final home = context.read<HomeProvider>();
-                        if (phoneController.text.length != 10) {
-                          Helpers.showToast("Eneter a valid mobile number");
-                        } else {
-                          if (passwordController.text.length < 8) {
-                            Helpers.showToast("Password must be 8 charachters");
-                          } else {
-                            String phone = phoneController.text;
-                            String pass = passwordController.text;
-                            isLoading.value = true;
-                            FocusScope.of(context).unfocus();
-                            final res = await services
-                                .logIn(phone: phone, password: pass)
-                                .catchError((error) {
-                              Helpers.showToast(error);
-                              isLoading.value = false;
-                              return error;
-                            });
-
-                            if (res ?? false) {
-                              await home.getversion();
-                              await home.getcount();
-                              await home.getprofile();
-                              await homeservices.updateactive(status: 1);
-                              Navigator.of(context).pushAndRemoveUntil(
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()),
-                                  (Route<dynamic> route) => false);
-                              isLoading.value = false;
-                            } else {
-                              isLoading.value = false;
-                            }
-                          }
-                        }
-                      },
-                      text: "Log in",
-                      isLoading: isLoading,
-                      // color: Color.fromRGBO(23, 122, 99, 1),
-                      fontStyle: FontPalette.white14500,
-                    ),
-                    // 120.verticalSpace,
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     Text(
-                    //       "If you don’t have account ?",
-                    //       style: GoogleFonts.inter(
-                    //           fontWeight: FontWeight.w400,
-                    //           fontSize: 13.sp,
-                    //           color: const Color.fromRGBO(0, 0, 0, 1)),
-                    //     ),
-                    //     InkWell(
-                    //       onTap: () =>
-                    //           Navigator.of(context).push(MaterialPageRoute(
-                    //         builder: (context) => const SignupScreen(),
-                    //       )),
-                    //       child: Text(
-                    //         "Register",
-                    //         style: GoogleFonts.inter(
-                    //             fontWeight: FontWeight.w400,
-                    //             fontSize: 13.sp,
-                    //             color: const Color.fromRGBO(0, 0, 0, 1)),
-                    //       ),
-                    //     )
-                    //   ],
-                    // ),
-                  ],
+                      ),
+                      6.verticalSpace,
+                      Text(
+                        "Sign in to manage your ironing orders",
+                        style: GoogleFonts.inter(
+                          color: Colors.white.withValues(alpha: 0.85),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 13.sp,
+                        ),
+                      ),
+                      30.verticalSpace,
+                    ],
+                  ),
                 ),
               ),
+              40.verticalSpace,
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      Text("Phone Number", style: FontPalette.black13500),
+                    ],
+                  ),
+                  8.verticalSpace,
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.primaryLight),
+                      borderRadius: BorderRadius.circular(11.r),
+                    ),
+                    height: 47.h,
+                    child: TextField(
+                      cursorColor: AppColors.primaryDark,
+                      style: FontPalette.black15500,
+                      controller: phoneController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  16.verticalSpace,
+                  Row(
+                    children: [
+                      Text(
+                        "Password",
+                        style: FontPalette.black13500,
+                      ),
+                    ],
+                  ),
+                  8.verticalSpace,
+                  ValueListenableBuilder<bool>(
+                      valueListenable: showPassword,
+                      builder: (context, value, child) {
+                        return CustomText(
+                          cursorColor: AppColors.primaryDark,
+                          style: FontPalette.black15500,
+                          semanticlabel: "Enter your password",
+                          controller: passwordController,
+                          maxlines: 1,
+                          suffixWidget: InkWell(
+                            onTap: () {
+                              showPassword.value = !showPassword.value;
+                            },
+                            child: SizedBox.square(
+                              dimension: 49.h,
+                              child: Icon(
+                                semanticLabel: value
+                                    ? "password is not visible"
+                                    : "password is visible",
+                                value
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined,
+                                size: 20.r,
+                                color: HexColor("#7A7A7A"),
+                              ),
+                            ),
+                          ),
+                          obscureText: value,
+                        );
+                      }),
+                  50.verticalSpace,
+                  CustomButton(
+                    onTap: () async {
+                      final home = context.read<HomeProvider>();
+                      if (phoneController.text.length != 10) {
+                        Helpers.showToast("Eneter a valid mobile number");
+                      } else {
+                        if (passwordController.text.length < 8) {
+                          Helpers.showToast("Password must be 8 charachters");
+                        } else {
+                          String phone = phoneController.text;
+                          String pass = passwordController.text;
+                          isLoading.value = true;
+                          FocusScope.of(context).unfocus();
+                          final res = await services
+                              .logIn(phone: phone, password: pass)
+                              .catchError((error) {
+                            Helpers.showToast(error);
+                            isLoading.value = false;
+                            return error;
+                          });
 
-              //80.verticalSpace,
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Text("If you don’t have account ?",
-              //         style: GoogleFonts.inter(
-              //             fontWeight: FontWeight.w400,
-              //             fontSize: 13.sp,
-              //             color: Color.fromRGBO(0, 0, 0, 1))),
-              //     Text("Register",
-              //         style: GoogleFonts.inter(
-              //             fontWeight: FontWeight.w400,
-              //             fontSize: 13.sp,
-              //             color: Color.fromRGBO(0, 0, 0, 1))
-              //             )
-              //   ],
-              // )
+                          if (res ?? false) {
+                            await home.getversion();
+                            await home.getcount();
+                            await home.getprofile();
+                            await homeservices.updateactive(status: 1);
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen()),
+                                (Route<dynamic> route) => false);
+                            isLoading.value = false;
+                          } else {
+                            isLoading.value = false;
+                          }
+                        }
+                      }
+                    },
+                    text: "Log in",
+                    isLoading: isLoading,
+                    fontStyle: FontPalette.white14500,
+                  ),
+                  30.verticalSpace,
+                ],
+              ).horizontalPadding(24.w),
             ],
-          ).horizontalPadding(20.w),
+          ),
         ),
+      ),
       ),
     );
   }

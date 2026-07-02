@@ -34,7 +34,7 @@ class CustomButton extends StatelessWidget {
           width: width ?? MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(11.r),
-              color: color ?? const Color.fromRGBO(2, 94, 57, 1)),
+              color: color ?? AppColors.primaryDark),
           child: Center(
               child: isLoading?.value == true
                   ? const CircularProgressIndicator(

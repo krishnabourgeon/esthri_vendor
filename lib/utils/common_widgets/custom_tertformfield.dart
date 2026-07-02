@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:elaveoironing_vendor/res/color_pallete.dart';
 import 'package:elaveoironing_vendor/res/font_palette.dart';
 import 'package:elaveoironing_vendor/utils/helper/constantwidget.dart';
 
@@ -141,7 +142,7 @@ class CustomText extends StatelessWidget {
           width: width ?? double.maxFinite,
           decoration: decoration ??
               BoxDecoration(
-                border: Border.all(color: Color.fromRGBO(23, 122, 99, 1)),
+                border: Border.all(color: AppColors.primaryLight),
                 // color: boxcolor ?? HexColor("#EAF4F6"),
                 borderRadius: BorderRadius.circular(11.r),
               ),
