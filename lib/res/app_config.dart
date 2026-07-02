@@ -4,7 +4,9 @@ class AppConfig {
   AppConfig._internal();
 
   // static String baseUrl = "https://parkin.pro/";
-  static String baseUrl = "http://elaveo.simbillsoft.in/";
+  // static String baseUrl = "http://elaveo.simbillsoft.in/";
+  static String baseUrl = "https://esthiri.simbillsoft.in/";
+  
   static String middleurl = "api/v1/store-keeper/";
   static String appLocale = 'en';
   static String? authToken;

@@ -39,7 +39,7 @@ dependencies:
   shimmer: ^3.0.0
   fluttertoast: ^8.2.4
   provider: ^6.1.1
-  pinput: ^3.0.1
+  pinput: ^6.0.2
   get_it: ^7.7.0
   either_dart: ^1.0.0
   http: ^1.2.1

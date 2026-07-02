@@ -91,31 +91,50 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           double width = constraints.maxWidth * .1399;
                           return Column(
                             children: [
+                              // Pinput(
+                              //    androidSmsAutofillMethod:
+                              //       AndroidSmsAutofillMethod.smsUserConsentApi,
+                              //   autofocus: true,
+                              //   length: 4,
+                              //   defaultPinTheme: defaultTheme(width),
+                              //   focusedPinTheme: defaultTheme(width)
+                              //       .copyDecorationWith(
+                              //           border: Border.all(
+                              //               color: HexColor('#EAF4F6'))),
+                              //   errorPinTheme: defaultTheme(width)
+                              //       .copyDecorationWith(
+                              //           border: Border.all(
+                              //               color: HexColor('#E50019'))),
+                              //   submittedPinTheme: defaultTheme(width),
+                              //   pinputAutovalidateMode:
+                              //       PinputAutovalidateMode.onSubmit,
+                              //   showCursor: true,
+                              //   onCompleted: (value) {
+                              //     otp = value;
+                              //   },
+                              //   inputFormatters: Validator.inputFormatter(
+                              //           InputFormatType.phoneNumber) ??
+                              //       [],
+                              // ),
                               Pinput(
-                                androidSmsAutofillMethod:
-                                    AndroidSmsAutofillMethod.smsUserConsentApi,
                                 autofocus: true,
                                 length: 4,
                                 defaultPinTheme: defaultTheme(width),
-                                focusedPinTheme: defaultTheme(width)
-                                    .copyDecorationWith(
-                                        border: Border.all(
-                                            color: HexColor('#EAF4F6'))),
-                                errorPinTheme: defaultTheme(width)
-                                    .copyDecorationWith(
-                                        border: Border.all(
-                                            color: HexColor('#E50019'))),
+                                focusedPinTheme: defaultTheme(width).copyDecorationWith(
+                                  border: Border.all(color: HexColor('#EAF4F6')),
+                                ),
+                                errorPinTheme: defaultTheme(width).copyDecorationWith(
+                                  border: Border.all(color: HexColor('#E50019')),
+                                ),
                                 submittedPinTheme: defaultTheme(width),
-                                pinputAutovalidateMode:
-                                    PinputAutovalidateMode.onSubmit,
+                                pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                                 showCursor: true,
                                 onCompleted: (value) {
                                   otp = value;
                                 },
-                                inputFormatters: Validator.inputFormatter(
-                                        InputFormatType.phoneNumber) ??
-                                    [],
-                              ),
+                                inputFormatters:
+                                    Validator.inputFormatter(InputFormatType.phoneNumber) ?? [],
+                              )
                             ],
                           );
                         }),
