@@ -1,7 +1,6 @@
 import 'package:elaveoironing_vendor/services/network/base_services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:elaveoironing_vendor/res/app_config.dart';
-import 'package:elaveoironing_vendor/services/network/base_services.dart';
 import 'package:elaveoironing_vendor/services/shared_prefernce/shared_prefs.dart';
 import 'package:elaveoironing_vendor/utils/helper/helpers.dart';
 
@@ -19,17 +18,27 @@ class AuthServices {
     } else if (res.isRight) {
       if (res.right["status"]) {
         print("................${res.right["token"]}");
-        sharedPrefs.saveAuthToken(token: res.right["token"]);
-        sharedPrefs.savephone(name: res.right["user"]["name"]);
+        final token = res.right["token"]?.toString() ?? '';
+        final user = res.right["user"];
+        final name = user?["name"]?.toString() ?? '';
+        final id = user?["id"] is int
+            ? user["id"] as int
+            : int.tryParse('${user?["id"]}') ?? 0;
+        final deliveryAgent = res.right["site_settings"]?["delivery_agent"];
+        final settings = deliveryAgent is int
+            ? deliveryAgent
+            : int.tryParse('$deliveryAgent') ?? 0;
+
+        sharedPrefs.saveAuthToken(token: token);
+        sharedPrefs.savephone(name: name);
         sharedPrefs.saveactive(active: true);
-        sharedPrefs.savesettings(
-            settings: res.right["site_settings"]["delivery_agent"]);
-        sharedPrefs.saveid(id: res.right["user"]["id"]);
-        AppConfig.id = res.right["user"]["id"];
-        AppConfig.authToken = "Bearer ${res.right["token"]}";
-        AppConfig.name = res.right["user"]["name"];
+        sharedPrefs.savesettings(settings: settings);
+        sharedPrefs.saveid(id: id);
+        AppConfig.id = id;
+        AppConfig.authToken = "Bearer $token";
+        AppConfig.name = name;
         AppConfig.isactive = true;
-        AppConfig.settings = res.right["site_settings"]["delivery_agent"];
+        AppConfig.settings = settings;
         return true;
       } else {
         return false;

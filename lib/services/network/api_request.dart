@@ -183,6 +183,7 @@ Future<http.Response> getRequest({required String endPoint}) async {
     if (error.toString().contains('SocketException')) {
       debugPrint("Error occurred while communicating with Server!");
     }
+    rethrow;
   }
   return response;
 }
@@ -205,6 +206,7 @@ Future<http.Response> postRequest(
     if (error.toString().contains('SocketException')) {
       debugPrint("Error occurred while communicating with Server!");
     }
+    rethrow;
   }
   return response;
 }
@@ -228,6 +230,7 @@ Future<http.Response> getRequestWithToken({required String endPoint}) async {
     if (error.toString().contains('SocketException')) {
       debugPrint("Error occurred while communicating with Server!");
     }
+    rethrow;
   }
   return response;
 }
@@ -252,6 +255,7 @@ Future<http.Response> getRequestWithTokenversion(
     if (error.toString().contains('SocketException')) {
       debugPrint("Error occurred while communicating with Server!");
     }
+    rethrow;
   }
   return response;
 }
@@ -276,6 +280,7 @@ Future<http.Response> postRequestWithToken(
     if (error.toString().contains('SocketException')) {
       debugPrint("Error occurred while communicating with Server!");
     }
+    rethrow;
   }
   return response;
 }
@@ -300,6 +305,7 @@ Future<http.Response> putRequestWithToken(
     if (error.toString().contains('SocketException')) {
       debugPrint("Error occurred while communicating with Server!");
     }
+    rethrow;
   }
   return response;
 }
