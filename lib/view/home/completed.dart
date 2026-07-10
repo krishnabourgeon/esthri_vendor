@@ -113,7 +113,10 @@ class _CompletedScreenState extends State<CompletedScreen> {
         await precacheImage(
             NetworkImage(
                 "${home.pendingdata?.orders![i].orderImages![n].filePath}"),
-            context);
+            context,
+            onError: (exception, stackTrace) {
+              debugPrint("Failed to load image: $exception");
+            });
       }
     }
   }
@@ -525,7 +528,9 @@ class ContainerBooking extends StatelessWidget {
                 style: FontPalette.black11500,
               ),
               Text(
-                "${items![0].item?.serviceName}",
+                items != null && items!.isNotEmpty
+                    ? "${items![0].item?.serviceName}"
+                    : "-",
                 style: FontPalette.green11500,
               ),
             ],

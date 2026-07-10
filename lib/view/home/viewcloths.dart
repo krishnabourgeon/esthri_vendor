@@ -44,7 +44,11 @@ class ViewclothScreen extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.r),
                   image: DecorationImage(
-                      image: NetworkImage("$image"), fit: BoxFit.fill)),
+                      image: NetworkImage("$image"), 
+                      fit: BoxFit.fill,
+                      onError: (exception, stackTrace) {
+                        debugPrint("Image error: $exception");
+                      })),
             ).horizontalPadding(20.w),
           );
         },
@@ -254,7 +258,10 @@ class ViewclothScreen extends StatelessWidget {
                                           image: DecorationImage(
                                               image: NetworkImage(
                                                   "${image![index].filePath}"),
-                                              fit: BoxFit.cover)),
+                                              fit: BoxFit.cover,
+                                              onError: (exception, stackTrace) {
+                                                debugPrint("Image error: $exception");
+                                              })),
                                     ),
                                   );
                                 }),

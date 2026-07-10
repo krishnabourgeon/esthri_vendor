@@ -1327,7 +1327,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         .profile
                                                         ?.user
                                                         ?.picture ??
-                                                    ''))),
+                                                    ''),
+                                                onError: (exception, stackTrace) {
+                                                  debugPrint("Image error: $exception");
+                                                })),
                                       ),
                                 13.horizontalSpace,
                                 Column(

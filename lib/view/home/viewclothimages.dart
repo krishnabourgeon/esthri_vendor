@@ -35,7 +35,11 @@ class _ViewclothimagesState extends State<Viewclothimages> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.r),
                   image: DecorationImage(
-                      image: NetworkImage("$image"), fit: BoxFit.fill)),
+                      image: NetworkImage("$image"), 
+                      fit: BoxFit.fill,
+                      onError: (exception, stackTrace) {
+                        debugPrint("Image error: $exception");
+                      })),
             ).horizontalPadding(20.w),
           );
         },
@@ -74,6 +78,8 @@ class _ViewclothimagesState extends State<Viewclothimages> {
                   child: Image.network(
                     widget.image![index].filePath ?? '',
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const Icon(Icons.error),
                   )
                   // Image.asset(
                   //   "assets/shoe.png",
